@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      container_name: fastapi_app
+      restart: always
+      ports:
+        -"8000:8000"
