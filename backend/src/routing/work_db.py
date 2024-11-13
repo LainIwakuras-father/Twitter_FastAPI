@@ -1,6 +1,3 @@
-from fastapi import APIRouter, HTTPException
-from  fastapi.responses import JSONResponse
-from app.db.db import create_database
 
 db_router = APIRouter(prefix="/Api",tags=['Api'])
 

@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 
+from backend.src.utils.exception.exception import custom_http_exception_handler, custom_requestvalueError_handler
 from routing.router import all_routers
-from exception.exception import custom_http_exception_handler, custom_requestvalueError_handler
 
 app = FastAPI()
 
