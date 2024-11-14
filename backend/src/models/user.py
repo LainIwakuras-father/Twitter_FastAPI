@@ -22,26 +22,20 @@ class UserOrm(Base):
     name: Mapped[str]
     api_key:Mapped[str] = mapped_column()
     #one-to-many
-    tweets:Mapped[List['TweetOrm']] = relationship(
-        backref="user",
-        cascade="all, delete-orphan"
-    )
+    #tweets:Mapped[List['TweetOrm']] = relationship(  backref="user",cascade="all, delete-orphan")
     # one-to-many
-    likes: Mapped[List['LikeOrm']] = relationship(
-        backref="user",
-        cascade="all, delete-orphan"
-    )
+    #likes: Mapped[List['LikeOrm']] = relationship(backref="user", cascade="all, delete-orphan")
     # many-to-many
-    followers = relationship("User",
-                              secondary=follower_following,
-                              primaryjoin=id == follower_following.c.following_id,
-                              secondaryjoin=id == follower_following.c.follower_id,
+    followers = relationship("user",
+                              secondary=follower_followingOrm,
+                              primaryjoin=id == follower_followingOrm.c.following_id,
+                              secondaryjoin=id == follower_followingOrm.c.follower_id,
                               back_populates="following")
 
-    following = relationship("User",
-                              secondary=follower_following,
-                              primaryjoin=id == follower_following.c.follower_id,
-                              secondaryjoin=id == follower_following.c.following_id,
+    following = relationship("user",
+                              secondary=follower_followingOrm,
+                              primaryjoin=id == follower_followingOrm.c.follower_id,
+                              secondaryjoin=id == follower_followingOrm.c.following_id,
                               back_populates="followers")
 
 

@@ -1,14 +1,7 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.exceptions import RequestValidationError
-
-from backend.src.utils.exception.exception import custom_http_exception_handler, custom_requestvalueError_handler
+from fastapi import FastAPI
 from routing.router import all_routers
 
-app = FastAPI()
-
-
-app.add_exception_handler(HTTPException,custom_http_exception_handler)
-app.add_exception_handler(RequestValidationError,custom_requestvalueError_handler)
+app = FastAPI(title="Twitter", debug=True)
 
 for router in all_routers:
     app.include_router(router)

@@ -1,0 +1,2 @@
+class FollowService:
+    pass

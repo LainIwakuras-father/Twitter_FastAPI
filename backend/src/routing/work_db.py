@@ -1,3 +1,7 @@
+from fastapi import APIRouter,HTTPException
+from fastapi.responses import JSONResponse
+
+from backend.src.db.db import create_database
 
 db_router = APIRouter(prefix="/Api",tags=['Api'])
 
@@ -9,5 +13,5 @@ async def create_table():
     except Exception as e:
         print(e)
         raise HTTPException(500, "Server error!")
-    return JSONResponse({"message": "Models created!"}, status_code=201)
+
 

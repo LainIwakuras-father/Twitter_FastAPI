@@ -13,12 +13,12 @@ class TweetOrm(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     data: Mapped[str]
     #tweet-images
-    attachments: Mapped[List['ImageOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
+    # attachments: Mapped[List['ImageOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
     #user-tweet
-    author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     author = relationship(backref="tweet")
     #tweet-likes
-    likes: Mapped[List['LikeOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
+    # likes: Mapped[List['LikeOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
 
     created_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow, nullable=True
