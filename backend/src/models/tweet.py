@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import List
+
 
 from backend.src.db.db import Base
-from sqlalchemy.orm import relationship, Mapped ,mapped_column
-from sqlalchemy import ForeignKey
+from sqlalchemy.orm import  Mapped ,mapped_column
+from sqlalchemy import ForeignKey,func
 
 
 """class tweet"""
@@ -12,15 +12,10 @@ class TweetOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     data: Mapped[str]
-    #tweet-images
-    # attachments: Mapped[List['ImageOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
-    #user-tweet
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    #author = relationship(backref="tweet")
-    #tweet-likes
-    # likes: Mapped[List['LikeOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
-
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.utcnow, nullable=True
+        server_default=func.now(),
+        default=datetime.now(), nullable=True
     )
+
     __mapper_args__ = {"confirm_deleted_rows": False}

@@ -22,7 +22,9 @@ class UserOrm(Base):
     name: Mapped[str]
     api_key:Mapped[str] = mapped_column()
     #one-to-many
-    tweets:Mapped[List['TweetOrm']] = relationship( backref="user",cascade="all, delete-orphan")
+    tweets: Mapped[List["TweetOrm"]] = relationship(
+        backref="user", cascade="all, delete-orphan"
+    )
     # one-to-many
     #likes: Mapped[List['LikeOrm']] = relationship(backref="user", cascade="all, delete-orphan")
     # many-to-many

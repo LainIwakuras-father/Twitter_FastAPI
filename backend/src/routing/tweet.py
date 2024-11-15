@@ -1,17 +1,26 @@
+from loguru import logger
 from  fastapi import APIRouter
 
-tweet_router = APIRouter(tags=["Tweet"])
+from backend.src.schemas.tweet_schema import TweetWrite, TweetRead
+from backend.src.services.tweet import TweetService
 
-@tweet_router.get('/api/tweets')
-async def read_tweet():
-    pass
+tweet_router = APIRouter(prefix='/api/tweets',tags=["Tweet"])
 
-@tweet_router.post('/api/tweets')
-async def write_tweet():
-    pass
+@logger.catch()
+@tweet_router.get('')
+async def read_tweet()->list[TweetRead]:
+      tweets = await TweetService.get_tweets()
+      return tweets
 
-@tweet_router.delete('/api/tweets/{id}')
-async def delete_tweet():
+@logger.catch()
+@tweet_router.post('')
+async def write_tweet(content:TweetWrite):
+    tweet_id = await TweetService.add_tweet(content)
+    return {'tweet_id':tweet_id}
+
+@logger.catch()
+@tweet_router.delete('{id}')
+async def delete_tweet(id:int):
     pass
 
 
