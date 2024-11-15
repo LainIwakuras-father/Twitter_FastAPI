@@ -5,12 +5,12 @@ from pydantic import BaseModel,ConfigDict
 
 class UserWrite(BaseModel):
     name:str
-
+    #model_config= ConfigDict(from_attributes=True)
 
 class UserRead(UserWrite):
 
     id:int    # Автоматическое преобразование данных ORM-модели в объект схемы для сериализации
-    config = ConfigDict(from_attributes=True)
+   #model_config =  ConfigDict(from_attributes=True)
 
 
 class UserRel(UserRead):
@@ -19,4 +19,6 @@ class UserRel(UserRead):
     following: Optional[List['UserRead']] = []
 
     # Автоматическое преобразование данных ORM-модели в объект схемы для сериализации
-    config = ConfigDict(from_attributes=True)
+    #model_config = ConfigDict(from_attributes=True)
+    class Config:
+        orm_mode = True

@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, Mapped ,mapped_column
 from sqlalchemy import ForeignKey
 
 
-
+"""class tweet"""
 class TweetOrm(Base):
     __tablename__ = "tweet"
 
@@ -16,10 +16,11 @@ class TweetOrm(Base):
     # attachments: Mapped[List['ImageOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
     #user-tweet
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    author = relationship(backref="tweet")
+    #author = relationship(backref="tweet")
     #tweet-likes
     # likes: Mapped[List['LikeOrm']] = relationship(backref="tweet", cascade="all, delete-orphan")
 
     created_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow, nullable=True
     )
+    __mapper_args__ = {"confirm_deleted_rows": False}
