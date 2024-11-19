@@ -2,6 +2,8 @@ from typing import Optional,List
 
 from pydantic import BaseModel,ConfigDict
 
+from backend.src.schemas.base_response import BaseGoodResponse
+
 
 class UserWrite(BaseModel):
     name:str
@@ -11,7 +13,7 @@ class UserWrite(BaseModel):
 class User(BaseModel):
     id:int
     name:str
-
+    model_config = ConfigDict(from_attributes=True)
 
 class UserRel(User):
 
@@ -19,7 +21,10 @@ class UserRel(User):
     following: Optional[List['User']] = []
 
     # Автоматическое преобразование данных ORM-модели в объект схемы для сериализации
-    model_config = ConfigDict(from_attributes=True)
+
     #old method
     # class Config:
     #     orm_mode = True
+
+class UserOUT(BaseGoodResponse):
+    user:UserRel

@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship, Mapped ,mapped_column
 from sqlalchemy import Table, Integer,ForeignKey, Column
 
 from backend.src.db.db import Base
+from backend.src.models.likes import LikeOrm
 from backend.src.models.tweet import TweetOrm
 
 #table Follow
@@ -22,11 +23,11 @@ class UserOrm(Base):
     name: Mapped[str]
     api_key:Mapped[str] = mapped_column()
     #one-to-many
-    tweets: Mapped[List["TweetOrm"]] = relationship(
-        backref="user", cascade="all, delete-orphan"
+    tweets: Mapped[List["TweetOrm"]] = relationship( 'TweetOrm',
+        back_populates='author', cascade="all, delete-orphan"
     )
     # one-to-many
-    #likes: Mapped[List['LikeOrm']] = relationship(backref="user", cascade="all, delete-orphan")
+    likes: Mapped[List['LikeOrm']] = relationship('LikeOrm',back_populates='user', cascade="all, delete-orphan")
     # many-to-many
     followers = relationship("UserOrm",
                              secondary=follower_followingOrm,
