@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from typing import List
 
 from loguru import logger

@@ -2,7 +2,7 @@ from loguru import logger
 from fastapi import APIRouter
 
 from backend.src.schemas.base_response import BaseGoodResponse
-from backend.src.schemas.user_schema import UserRel, UserOUT
+from backend.src.schemas.user_schema import  UserOUT
 from backend.src.services.follow import FollowService
 from backend.src.services.user import UserService
 
@@ -20,7 +20,8 @@ async def get_user_id(id: int):
 @logger.catch()
 @user_router.get('/me')
 async def get_user_me():
-    pass
+    user = await UserService.get_user_for_id(id)
+    return {'user': user}
 
 
 @logger.catch()

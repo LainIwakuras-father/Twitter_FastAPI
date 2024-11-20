@@ -1,21 +1,14 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
-from backend.src.db.configs import DB_USER, DB_PASS, DB_HOST, DB_NAME
-
-#from backend.src.db.configs import settings
-
-
+from backend.src.db.configs import  Settings
 
 '''
 Подключение к серверу
 '''
 #DB_URL = settings.DB_URL
-
-
-DB_URL = f'postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
+DB_URL = Settings.DB_URL
 engine = create_async_engine(DB_URL, echo=True)
-
 '''
 Создание сессии для работы с БД
 '''
@@ -30,11 +23,10 @@ class Base(DeclarativeBase):
 
 
 """
-функции создания и удаления БД
+функции создания БД
 """
 async def create_database():
     async with engine.begin() as conn:
-        # await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
 

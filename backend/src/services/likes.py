@@ -1,5 +1,4 @@
 from loguru import logger
-from fastapi import HTTPException
 
 from backend.src.db.db import async_session
 from backend.src.models.likes import LikeOrm

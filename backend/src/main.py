@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 
+from backend.src.routing.router import all_routers
 from backend.src.utils.exception import custom_exception_handler, CustomException
-from routing.router import all_routers
 
+#########################
+# BLOCK WITH API ROUTES #
+#########################
 app = FastAPI(title="Twitter", debug=True)
 
 for router in all_routers:

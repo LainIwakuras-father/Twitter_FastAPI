@@ -1,10 +1,8 @@
-from typing import List
-
 from loguru import logger
 from  fastapi import APIRouter
 
 from backend.src.schemas.base_response import BaseGoodResponse
-from backend.src.schemas.tweet_schema import TweetWrite, TweetRead, TweetsOut
+from backend.src.schemas.tweet_schema import TweetWrite, TweetsOut
 from backend.src.services.likes import LikeService
 from backend.src.services.tweet import TweetService
 

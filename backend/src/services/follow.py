@@ -1,5 +1,4 @@
 from loguru import logger
-from fastapi import HTTPException
 from sqlalchemy import insert
 
 from backend.src.db.db import async_session

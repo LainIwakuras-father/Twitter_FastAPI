@@ -1,5 +1,3 @@
-from fastapi import HTTPException
-
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from loguru import logger
