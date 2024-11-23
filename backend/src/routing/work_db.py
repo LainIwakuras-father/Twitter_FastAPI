@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 
 from backend.src.db.db import create_database
 
-db_router = APIRouter(prefix="/Api",tags=['Api'])
+db_router = APIRouter(prefix="/api",tags=['Api'])
 
 @db_router.get("/create_table")
 async def create_table():

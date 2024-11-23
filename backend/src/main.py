@@ -6,10 +6,20 @@ from backend.src.utils.exception import custom_exception_handler, CustomExceptio
 #########################
 # BLOCK WITH API ROUTES #
 #########################
-app = FastAPI(title="Twitter", debug=True)
+app = FastAPI(title="Twitter",
+              version="1.0.0",
+              description="API для управления пользователями и твитами",
+              debug=True)
 
 for router in all_routers:
     app.include_router(router)
+
+app_api = FastAPI()
+
+for router in all_routers:
+    app_api.include_router(router)
+
+app.mount("/api", app_api)
 
 
 app.add_exception_handler(CustomException,custom_exception_handler)
