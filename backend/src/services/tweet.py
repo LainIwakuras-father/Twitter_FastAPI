@@ -15,14 +15,22 @@ from backend.src.utils.exception import CustomException
 class TweetService:
 
     @classmethod
-    async def add_tweet(cls,tweet_data:TweetWrite):
+    async def add_tweet(cls,tweet:TweetWrite):
         logger.debug('Добавление твита')
-        dict = tweet_data.model_dump()
         async  with async_session() as db:
-            stmt = insert(TweetOrm).values(**dict).returning(TweetOrm.id)
-            res = await db.execute(stmt)
+            new_tweet = TweetOrm(
+                data=tweet.data, author_id=tweet.author_id
+            )
+            # Добавляем в индекс, фиксируем, но не записываем в БД!!!
+            db.add(new_tweet)
+            await db.flush()
+            tweet_media_ids = tweet.tweet_media_ids
+            if tweet_media_ids and tweet_media_ids != []:
+                pass
+
+            # Сохраняем в БД все изменения (новый твит + привязку картинок к твиту)
             await db.commit()
-            return res.scalar_one()
+            return new_tweet
 
     @classmethod
     async def get_tweets(cls)->List[TweetRead]:
@@ -31,7 +39,8 @@ class TweetService:
             query = (select(TweetOrm)
                     .options(
                      joinedload(TweetOrm.author),
-                    joinedload(TweetOrm.likes).subqueryload(LikeOrm.user))
+                     joinedload(TweetOrm.likes).subqueryload(LikeOrm.user),
+                     joinedload(TweetOrm.media))
                      .order_by(TweetOrm.created_at.desc())
                      )
 

@@ -62,15 +62,15 @@ async def client() -> AsyncGenerator[AsyncClient, None]:
     ) as ac:
         yield ac
 
-@pytest.mark.anyio
-async def test_get_user_id(self,client:AsyncClient):
+
+async def test_get_user_id(client:AsyncClient):
         response = await client.get("/users/2")
         assert response.status_code == 200
         assert response.json()["result"] == True
 
 
 @pytest.mark.anyio
-async def test_delete_tweet(self,client:AsyncClient):
+async def test_delete_tweet(client:AsyncClient):
         response = await client.post(
         "/tweets",
         json={"data": "This is a tweet to be deleted","author_id":1},

@@ -2,9 +2,10 @@ from datetime import datetime
 from typing import List
 
 from backend.src.db.db import Base
-from sqlalchemy.orm import  Mapped ,mapped_column ,relationship
+from sqlalchemy.orm import  Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey,func
 
+from backend.src.models.media import MediaOrm
 from backend.src.models.likes import LikeOrm
 
 """class tweet"""
@@ -13,6 +14,8 @@ class TweetOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     data: Mapped[str]
+    media: Mapped[List[MediaOrm]] = relationship('MediaOrm',back_populates='tweet', cascade="all, delete-orphan")
+
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
 
     author = relationship('UserOrm',back_populates='tweets')

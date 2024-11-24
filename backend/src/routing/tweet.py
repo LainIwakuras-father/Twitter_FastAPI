@@ -18,7 +18,7 @@ async def read_tweet():
 
 
 @logger.catch()
-@tweet_router.post('')
+@tweet_router.post('',status_code=201)
 async def write_tweet(content:TweetWrite):
     tweet_id = await TweetService.add_tweet(content)
     return {'tweet_id':tweet_id}
@@ -32,7 +32,7 @@ async def delete_tweet(id:int):
 
 
 @logger.catch()
-@tweet_router.post('/{id}/likes',response_model=BaseGoodResponse,status_code=200)
+@tweet_router.post('/{id}/likes',response_model=BaseGoodResponse,status_code=201)
 async def add_likes(tweet_id:int, user_id:int):
     await LikeService.add_like(tweet_id=tweet_id, user_id=user_id)
     return {'result':'True'}
