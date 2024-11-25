@@ -14,12 +14,7 @@ app = FastAPI(title="Twitter",
 for router in all_routers:
     app.include_router(router)
 
-app_api = FastAPI()
 
-for router in all_routers:
-    app_api.include_router(router)
-
-app.mount("/api", app_api)
 
 
 app.add_exception_handler(CustomException,custom_exception_handler)

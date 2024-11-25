@@ -6,7 +6,7 @@ from fastapi import UploadFile
 
 
 async def save_upload_media(file: UploadFile):
-    upload_folder = "backend/src/static"
+    upload_folder = "static"
     # Создаем директорию для картинки, если ее не
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)

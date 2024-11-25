@@ -1,7 +1,8 @@
 from typing import List
 
+
 from loguru import logger
-from sqlalchemy import insert,select
+from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
 from backend.src.db.db import async_session
@@ -9,6 +10,7 @@ from backend.src.models.likes import LikeOrm
 from backend.src.models.tweet import TweetOrm
 
 from backend.src.schemas.tweet_schema import TweetWrite, TweetRead
+from backend.src.services.media import MediaService
 from backend.src.utils.exception import CustomException
 
 
@@ -23,14 +25,19 @@ class TweetService:
             )
             # Добавляем в индекс, фиксируем, но не записываем в БД!!!
             db.add(new_tweet)
-            await db.flush()
+            await db.commit()
+            await db.refresh(new_tweet)
+
+
             tweet_media_ids = tweet.tweet_media_ids
             if tweet_media_ids and tweet_media_ids != []:
-                pass
+                # Привязываем изображения к твиту
+                  await MediaService.update_media(tweet_media_ids=tweet_media_ids,tweet_id=new_tweet.id)
+
 
             # Сохраняем в БД все изменения (новый твит + привязку картинок к твиту)
-            await db.commit()
-            return new_tweet
+
+            return new_tweet.id
 
     @classmethod
     async def get_tweets(cls)->List[TweetRead]:

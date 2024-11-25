@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, ConfigDict, model_validator
+from pydantic import BaseModel, Field, ConfigDict, model_validator, field_validator
 
 from backend.src.schemas.base_response import BaseGoodResponse
 from backend.src.schemas.user_schema import User
@@ -26,10 +26,7 @@ class MediaOutTweet(BaseModel):
       file_path:str
       model_config = ConfigDict(from_attributes=True)
 
-class Media:
-      id:int
-      file_path:str
-      #model_config = ConfigDict(from_attributes=True)
+
 
 class MediaOut(BaseGoodResponse):
       id:int = Field(alias='media_id')
@@ -48,11 +45,28 @@ class TweetWrite(BaseModel):
 class TweetRead(BaseModel):
       id:int
       data:str = Field(alias='content')
-      media: List[str] = Field('attachments')
+      media: List[str] = Field(alias='attachments')
       author:User
       likes:Optional[List['Like']] = []
+
+      @field_validator("media", mode="before")
+      def serialize_images(cls, val: List[MediaOutTweet]):
+            """
+            Возвращаем список строк с ссылками на изображение
+            """
+            if isinstance(val, list):
+                  return [v.file_path for v in val]
+
+            return val
+
+
       model_config = ConfigDict(from_attributes=True,populate_by_name=True)
 
 #СХЕМА ВЫВОДА СПИСКА ТВИТОВ
 class TweetsOut(BaseGoodResponse):
       tweets:List[TweetRead]
+
+#СХЕМА ВЫВОДА  сделанного хорошо твита
+class TweetCreateGoodResponse(BaseGoodResponse):
+      id:int = Field(alias='tweet_id')
+      model_config = ConfigDict(from_attributes=True, populate_by_name=True)

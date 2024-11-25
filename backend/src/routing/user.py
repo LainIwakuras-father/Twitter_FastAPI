@@ -1,5 +1,7 @@
 from loguru import logger
-from fastapi import APIRouter
+from fastapi import APIRouter,Header
+from fastapi.security import APIKeyHeader
+from fastapi import Security
 
 from backend.src.schemas.base_response import BaseGoodResponse
 from backend.src.schemas.user_schema import  UserOUT
@@ -8,11 +10,17 @@ from backend.src.services.user import UserService
 
 
 user_router=APIRouter(prefix='/users',tags=['users'])
+class APITokenKeyHeader(APIKeyHeader):
+    pass
+
+Token = APITokenKeyHeader(name="api-key")
 
 
-@logger.catch()
+
+
+
 @user_router.get('/{id}', response_model=UserOUT,status_code=200)
-async def get_user_id(id: int):
+async def get_user_id(id: int ,):
     user = await UserService.get_user_for_id(id)
     return  {'user':user}
 
