@@ -6,8 +6,8 @@ from typing import AsyncGenerator
 from httpx import ASGITransport, AsyncClient
 
 
-from backend.src.db.configs import Settings
-from backend.src.db.db import engine, Base, async_session
+from backend.src.configs import Settings
+from backend.src.db import engine, Base, async_session
 from backend.src.main import app
 from backend.src.models.user import UserOrm
 

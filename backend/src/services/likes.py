@@ -1,7 +1,7 @@
 from loguru import logger
 from sqlalchemy import select
 
-from backend.src.db.db import async_session
+from backend.src.db import async_session
 from backend.src.models.likes import LikeOrm
 from backend.src.services.tweet import TweetService
 from backend.src.utils.exception import CustomException

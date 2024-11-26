@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from loguru import logger
 
-from backend.src.db.db import async_session
+from backend.src.db import async_session
 from backend.src.models.user import UserOrm
 
 

@@ -5,11 +5,11 @@ from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
-from backend.src.db.db import async_session
+from backend.src.db import async_session
 from backend.src.models.likes import LikeOrm
 from backend.src.models.tweet import TweetOrm
 
-from backend.src.schemas.tweet_schema import TweetWrite, TweetRead
+from backend.src.schemas.tweet_schema import TweetWrite
 from backend.src.services.media import MediaService
 from backend.src.utils.exception import CustomException
 

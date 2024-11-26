@@ -1,7 +1,7 @@
 from sqlalchemy.orm import  Mapped ,mapped_column ,relationship
 from sqlalchemy import ForeignKey
 
-from backend.src.db.db import Base
+from backend.src.db import Base
 
 
 

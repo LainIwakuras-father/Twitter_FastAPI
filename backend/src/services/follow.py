@@ -1,7 +1,7 @@
 from loguru import logger
 from sqlalchemy import insert,delete
 
-from backend.src.db.db import async_session
+from backend.src.db import async_session
 from backend.src.models.user import UserOrm, follower_followingOrm
 from backend.src.services.user import UserService
 from backend.src.utils.exception import CustomException

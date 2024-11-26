@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
-from backend.src.db.configs import  Settings
+from backend.src.configs import  Settings
 
 '''
 Подключение к серверу

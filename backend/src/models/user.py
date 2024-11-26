@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import relationship, Mapped ,mapped_column
 from sqlalchemy import Table, Integer,ForeignKey, Column
 
-from backend.src.db.db import Base
+from backend.src.db import Base
 from backend.src.models.likes import LikeOrm
 from backend.src.models.tweet import TweetOrm
 

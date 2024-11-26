@@ -1,7 +1,7 @@
 from fastapi import APIRouter,HTTPException
 from fastapi.responses import JSONResponse
 
-from backend.src.db.db import create_database
+from backend.src.db import create_database
 
 db_router = APIRouter(prefix="/api",tags=['Api'])
 

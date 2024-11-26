@@ -5,7 +5,7 @@ from loguru import logger
 from fastapi import UploadFile
 from sqlalchemy import update
 
-from backend.src.db.db import async_session
+from backend.src.db import async_session
 from backend.src.models.media import MediaOrm
 from backend.src.utils.media import save_upload_media
 
