@@ -17,3 +17,9 @@ async def save_upload_media(file: UploadFile):
     logger.info(f"Uploaded file saved at {full_path}")
 
     return file.filename
+
+async def delete_media():
+    '''
+    удаление из файловой системы
+    '''
+    pass

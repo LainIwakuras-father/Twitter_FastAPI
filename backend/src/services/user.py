@@ -25,10 +25,11 @@ class UserService:
 
 
     @classmethod
-    async def get_user_for_me(cls,token:str):
+    async def get_user_for_me(cls,api_key:str)-> UserOrm| None:
                  async with async_session() as db:
+                     logger.debug(f"Поиск пользователя по api-key: {api_key}")
                      query = (select(UserOrm)
-                              .where(UserOrm.api_key==token)
+                              .where(UserOrm.api_key == api_key)
                                .options(selectinload(UserOrm.following),
                                                selectinload(UserOrm.followers))
                               )

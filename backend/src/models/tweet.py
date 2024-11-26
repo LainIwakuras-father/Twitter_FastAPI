@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from typing import List
 
 from backend.src.db.db import Base
@@ -13,7 +14,7 @@ class TweetOrm(Base):
     __tablename__ = "tweet"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
-    data: Mapped[str]
+    data: Mapped[str] = mapped_column(index=True)
     media: Mapped[List[MediaOrm]] = relationship('MediaOrm',back_populates='tweet', cascade="all, delete-orphan")
 
     author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))

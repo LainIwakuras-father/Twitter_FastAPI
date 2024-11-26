@@ -21,10 +21,8 @@ class UserRel(User):
     following: Optional[List['User']] = []
 
     # Автоматическое преобразование данных ORM-модели в объект схемы для сериализации
+    model_config = ConfigDict(from_attributes=True)
 
-    #old method
-    # class Config:
-    #     orm_mode = True
 
 class UserOUT(BaseGoodResponse):
     user:UserRel

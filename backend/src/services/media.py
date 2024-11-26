@@ -12,7 +12,7 @@ from backend.src.utils.media import save_upload_media
 
 class MediaService:
      @classmethod
-     async def add_media(cls,file: UploadFile)->int:
+     async def add_media(cls,file: UploadFile)->MediaOrm|None:
           path = await save_upload_media(file)# Сохранение изображения в файловой системе
           logger.debug(f"Загрузка изображение {file}")
           async  with async_session() as db:
@@ -40,6 +40,13 @@ class MediaService:
 
              await db.commit()
 
+
+     @classmethod
+     async def delete_media(cls):
+         '''
+         сделать так что бы когда удалялся твит удалялось и фото из БД и файловой системы
+         '''
+         pass
 
 
 

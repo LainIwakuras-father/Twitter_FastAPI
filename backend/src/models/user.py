@@ -1,3 +1,4 @@
+
 from typing import List
 from sqlalchemy.orm import relationship, Mapped ,mapped_column
 from sqlalchemy import Table, Integer,ForeignKey, Column
@@ -21,7 +22,7 @@ class UserOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     name: Mapped[str]
-    api_key:Mapped[str] = mapped_column()
+    api_key:Mapped[str] = mapped_column(unique=True,index=True)
     #one-to-many
     tweets: Mapped[List["TweetOrm"]] = relationship( 'TweetOrm',
         back_populates='author', cascade="all, delete-orphan"
