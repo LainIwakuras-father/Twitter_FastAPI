@@ -1,32 +1,7 @@
 version: "3.11"
 
 services:
-    nginx:
-        container_name: nginx
-        build: nginx
-        volumes:
-          - ./nginx/static/images:/usr/share/nginx/html/static/images
-        ports:
-          - 80:80
-          - 443:443
-        depends_on:
-          - api
-        logging:
-          driver: "local"
-
-    api:
-        container_name: api
-        build: .
-        env_file:
-          - .env
-        ports:
-          - 8000:8000
-        depends_on:
-          - postgres
-        logging:
-          driver: "local"
-
-    postgres:
+    db:
       image: postgres:15
       container_name: db
       command: -p 5432
@@ -40,3 +15,41 @@ services:
         - POSTGRES_DB=${DB_NAME:?err}
       volumes:
         - ./postgres_db/:/var/lib/postgresql/data
+      networks:
+        -network
+
+    db_test:
+      image: postgres:15
+      container_name: db_test
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=db_test
+      ports:
+        - 5433:5432
+      volumes:
+        - ./postgres_db/:/var/lib/postgresql/data
+      networks:
+        -network
+
+    app:
+        container_name: api
+        build: .
+        command:
+          - uvicorn app.main:app --host 0.0.0.0 --port 8000
+        env_file:
+          - .env
+        ports:
+          - 8000:8000
+        depends_on:
+          - db
+        logging:
+          driver: "local"
+
+        networks:
+          -network
+
+networks:
+  network:
+    driver: bridge
+

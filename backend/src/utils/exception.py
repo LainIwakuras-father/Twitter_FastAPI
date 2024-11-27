@@ -3,12 +3,10 @@ from fastapi.responses import JSONResponse
 from fastapi.requests import Request
 
 
-
 class CustomException(HTTPException):
     """
     Кастомная ошибка для быстрого вызова исключений
     """
-
     pass
 
 
@@ -16,7 +14,6 @@ async def custom_exception_handler(request: Request, exc: HTTPException) -> JSON
     """
     Кастомный обработчик ошибок для CustomApiException
     """
-
     return JSONResponse(
         {
             "result": False,

@@ -30,7 +30,7 @@ class MediaService:
          logger.debug(
              f"Обновление изображений по id: {tweet_media_ids}, tweet_id: {tweet_id}"
          )
-         async  with (async_session() as db):
+         async  with async_session() as db:
              for media_id in tweet_media_ids:
                  query = (update(MediaOrm)
                           .where(MediaOrm.id==media_id)

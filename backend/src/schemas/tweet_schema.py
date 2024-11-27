@@ -38,7 +38,6 @@ class TweetWrite(BaseModel):
       data: str = Field()
       tweet_media_ids: Optional[List[int]]
 
-
       model_config = ConfigDict(from_attributes=True,populate_by_name=True)
 
 
