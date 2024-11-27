@@ -1,5 +1,6 @@
 import pytest
 import asyncio
+import pytest_asyncio
 from loguru import logger
 from httpx import AsyncClient,ASGITransport
 from typing import AsyncGenerator
@@ -30,7 +31,7 @@ def event_loop(request):
     yield loop
     loop.close()
 
-@pytest.fixture(scope="session")
+@pytest_asyncio.fixture(scope="session")
 async def client() -> AsyncGenerator[AsyncClient, None]:
     """
     Асинхронный клиент для выполнения запросов
@@ -46,7 +47,7 @@ async def users():
     """
     Пользователи для тестирования
     """
-    async with async_session as db :
+    async with async_session() as db :
         user_1 = UserOrm(name="Даниил", api_key="key_one")
         user_2 = UserOrm(name="Ростислав", api_key="key_two")
         user_3 = UserOrm(name="Матвей", api_key="key_tree")
