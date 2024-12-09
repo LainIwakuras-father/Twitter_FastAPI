@@ -1,10 +1,11 @@
+from fastapi import Depends
 from fastapi import Security
 from fastapi.requests import Request
 from fastapi.security import APIKeyHeader
 from loguru import logger
 
-from src.models.user import UserOrm
-from src.services.user import UserService
+from api.v1.dependencies import get_user_service
+from services.user_service import UserService
 from src.utils.exception import CustomException
 
 
@@ -35,10 +36,15 @@ class APITokenKeyHeader(APIKeyHeader):
 query_api_key = APITokenKeyHeader(name="api-key")
 
 
-async def get_current_user(api_key: str = Security(query_api_key)) -> UserOrm | None:
+async def get_current_user(
+        api_key: str = Security(query_api_key),
+        service: UserService = Depends(get_user_service)
+) :
+
     '''
         функция проверки текущего пользователя
     '''
+
     if api_key is None:
         logger.error("Токен не найден в header")
         raise CustomException(
@@ -46,7 +52,7 @@ async def get_current_user(api_key: str = Security(query_api_key)) -> UserOrm | 
             detail="Valid api-token token is missing"
         )
 
-    current_user = await UserService.get_user_for_me(api_key)
+    current_user = await service.get_for_apikey(api_key=api_key)
     if current_user is None:
         raise CustomException(
             status_code=401,

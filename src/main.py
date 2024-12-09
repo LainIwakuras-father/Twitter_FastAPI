@@ -12,6 +12,7 @@ from src.utils.get_current_user import get_current_user
 # BLOCK WITH API ROUTES #
 #########################
 path = os.path.join(os.path.dirname(__file__), "static")
+path_2 = os.path.join(os.path.dirname(__file__), "static/image")
 app = FastAPI(title="Twitter",
               version="1.0.0",
               description="API для управления пользователями и твитами",
@@ -22,16 +23,18 @@ app_api = FastAPI()
 
 app_api.include_router(routers)
 app.include_router(routers, dependencies=[Depends(get_current_user)])
-
 app.mount("/api", app_api)
 app.mount(
     "/",
     StaticFiles(directory=path, html=True),
     name="static",
 )
-
+app.mount(
+    "/static/image",
+    StaticFiles(directory=path_2, html=True),
+    name="image",
+)
 # dependencies=[Depends(get_current_user)]
-
 app.add_exception_handler(CustomException, custom_exception_handler)
 
 

@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.db import Base
+from db.db import Base
 
 
 class LikeOrm(Base):

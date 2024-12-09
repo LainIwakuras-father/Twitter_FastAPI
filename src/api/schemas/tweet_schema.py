@@ -2,8 +2,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field, ConfigDict, model_validator, field_validator
 
-from src.schemas.base_response import BaseGoodResponse
-from src.schemas.user_schema import User
+from api.schemas.base_response import BaseGoodResponse
+from api.schemas.user_schema import User
 
 
 class Like(BaseModel):

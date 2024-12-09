@@ -3,9 +3,9 @@ from typing import List
 from sqlalchemy import Table, Integer, ForeignKey, Column
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
-from src.db import Base
-from src.models.likes import LikeOrm
-from src.models.tweet import TweetOrm
+from db.db import Base
+from db.models.likes import LikeOrm
+from db.models.tweet import TweetOrm
 
 # table Follow
 follower_followingOrm = Table(
@@ -43,3 +43,11 @@ class UserOrm(Base):
                              back_populates="followers")
 
     __mapper_args__ = {"confirm_deleted_rows": False}
+
+    # def to_read_model(self) -> UserRel:
+    #     return UserRel(
+    #         id=self.id,
+    #         name=self.name,
+    #         following=[self.following],
+    #         followers=[self.followers]
+    #     )

@@ -3,12 +3,11 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
-from src.configs import Settings
+from core.configs import Settings
 
 '''
 Подключение к серверу
 '''
-
 DB_URL = Settings.DB_URL
 engine = create_async_engine(DB_URL, echo=True)
 '''

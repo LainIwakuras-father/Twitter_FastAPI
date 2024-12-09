@@ -1,12 +1,16 @@
 FROM python:3.11
 
+
+WORKDIR /srs
+
+
 ENV PYTHONUNBU
 
 COPY requirements-base.txt .
 
 RUN pip install --no-cache-dir --upgrade -r requirements-base.txt
 
-WORKDIR /srs
+
 
 COPY backend /src
 

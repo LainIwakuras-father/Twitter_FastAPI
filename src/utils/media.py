@@ -6,7 +6,7 @@ from loguru import logger
 
 
 async def save_upload_media(file: UploadFile):
-    upload_folder = "static"
+    upload_folder = "static\image"
     # Создаем директорию для картинки, если ее не
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)

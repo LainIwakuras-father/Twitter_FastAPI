@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.db import Base
+from db.db import Base
 
 
 class MediaOrm(Base):

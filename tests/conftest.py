@@ -6,10 +6,10 @@ import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from loguru import logger
 
-from src.db import engine, Base, async_session
+from db.db import engine, Base, async_session
 from src.main import app
-from src.models.user import UserOrm
-from src.configs import Settings
+from db.models import UserOrm
+from core.configs import Settings
 
 
 @pytest.fixture(scope='session', autouse=True)

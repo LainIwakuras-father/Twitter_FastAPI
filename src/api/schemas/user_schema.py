@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel, ConfigDict
 
-from src.schemas.base_response import BaseGoodResponse
+from api.schemas.base_response import BaseGoodResponse
 
 
 class UserWrite(BaseModel):
@@ -16,7 +16,7 @@ class User(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class UserRel(User):
+class UserFromDB(User):
     followers: Optional[List['User']] = []
     following: Optional[List['User']] = []
 
@@ -25,4 +25,4 @@ class UserRel(User):
 
 
 class UserOUT(BaseGoodResponse):
-    user: UserRel
+    user: UserFromDB

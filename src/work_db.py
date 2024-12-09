@@ -1,6 +1,6 @@
 from loguru import logger
 
-from src.db import create_database
+from db.db import create_database
 
 
 async def create_tables():
