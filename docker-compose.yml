@@ -1,55 +1,45 @@
-version: "3.11"
+version: "3.8"
 
 services:
     db:
-      image: postgres:15
-      container_name: db
+      image: postgres
+      container_name: my_postgres_for_app
       command: -p 5432
       expose:
         - 5432
       ports:
         - 5432:5432
       environment:
-        - POSTGRES_USER=${DB_USER:?err}
-        - POSTGRES_PASSWORD=${DB_PASS:?err}
-        - POSTGRES_DB=${DB_NAME:?err}
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASS}
+        - POSTGRES_DB=${DB_NAME}
       volumes:
-        - ./postgres_db/:/var/lib/postgresql/data
+        - postgres:/var/lib/postgres/data
+      restart: always
       networks:
-        -network
+        - network
 
-    db_test:
-      image: postgres:15
-      container_name: db_test
-      environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=db_test
-      ports:
-        - 5433:5432
-      volumes:
-        - ./postgres_db/:/var/lib/postgresql/data
-      networks:
-        -network
+
 
     app:
-        container_name: api
-        build: backend
+        container_name: my_project_app
+        build: ./
         command:
-          - uvicorn app.main:app --host 0.0.0.0 --port 8000
+          - uvicorn src.main:app --host 127.0.0.1 --port 8000
         env_file:
           - .env
         ports:
           - 8000:8000
         depends_on:
           - db
-        logging:
-          driver: "local"
-
         networks:
-          -network
+          - network
+        restart: always
 
 networks:
   network:
     driver: bridge
+
+volumes:
+  postgres:
 

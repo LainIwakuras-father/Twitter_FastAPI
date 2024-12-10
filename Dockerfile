@@ -1,20 +1,18 @@
 FROM python:3.11
 
+#ENV PYTHONDONTWRITEBYTECODE 1
+#ENV PYTHONUNBUFFERED 1
 
-WORKDIR /srs
+LABEL "Creator"="Uriy Dolewsky"
 
+WORKDIR /app
 
-ENV PYTHONUNBU
+COPY requirements-base.txt re.txt
 
-COPY requirements-base.txt .
+RUN pip install --no-cache-dir --upgrade -r re.txt
 
-RUN pip install --no-cache-dir --upgrade -r requirements-base.txt
-
-
-
-COPY backend /src
+COPY . .
 
 EXPOSE 8000
-# gunicorn
-# CMD gunicorn src.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000
-CMD ["uvicorn", "src.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8000"]
+
+CMD ["uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8000"]
