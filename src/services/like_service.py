@@ -1,15 +1,14 @@
 from loguru import logger
 
 from src.utils.exception import CustomException
-from utils.unitofwork import AbstractUnitOfWork
+from src.utils.unitofwork import AbstractUnitOfWork
 
 
 class LikeService:
     def __init__(self, uow: AbstractUnitOfWork):
         self.uow = uow
 
-
-    async def add_like(self, tweet_id:int, current_user_id:int):
+    async def add_like(self, tweet_id: int, current_user_id: int):
         async with self.uow:
             existing_tweet = await self.uow.tweet.find_one(id=tweet_id)
             if existing_tweet is None:
@@ -19,7 +18,7 @@ class LikeService:
                     detail='Tweet not found'
                 )
 
-            check_existing_like = await self.uow.like.find_one(tweet_id = tweet_id, user_id=current_user_id)
+            check_existing_like = await self.uow.like.find_one(tweet_id=tweet_id, user_id=current_user_id)
             if check_existing_like:
                 logger.warning("Пользователь уже ставил лайк твиту")
                 raise CustomException(
@@ -32,8 +31,7 @@ class LikeService:
             await self.uow.commit()
             logger.info(f"Лайк оформлен")
 
-
-    async def delete_like(self, tweet_id:int, current_user_id:int):
+    async def delete_like(self, tweet_id: int, current_user_id: int):
         async with self.uow:
             existing_tweet = await self.uow.tweet.find_one(id=tweet_id)
             if existing_tweet is None:

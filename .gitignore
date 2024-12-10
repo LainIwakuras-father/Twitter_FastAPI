@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .venv
+.env
 ../.env
 .test.env
 env/
@@ -130,6 +131,7 @@ dmypy.json
 .pyre/
 .idea/*
 ../.env
+
 .test.env
 .env-non-dev
 /.editorconfig

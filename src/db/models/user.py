@@ -3,9 +3,9 @@ from typing import List
 from sqlalchemy import Table, Integer, ForeignKey, Column
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
-from db.db import Base
-from db.models.likes import LikeOrm
-from db.models.tweet import TweetOrm
+from src.db.db import Base
+from src.db.models.likes import LikeOrm
+from src.db.models.tweet import TweetOrm
 
 # table Follow
 follower_followingOrm = Table(

@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel, ConfigDict
 
-from api.schemas.base_response import BaseGoodResponse
+from src.api.schemas.base_response import BaseGoodResponse
 
 
 class UserWrite(BaseModel):

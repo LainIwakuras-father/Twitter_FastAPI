@@ -1,15 +1,14 @@
 from loguru import logger
 
 from src.utils.exception import CustomException
-from utils.unitofwork import AbstractUnitOfWork
+from src.utils.unitofwork import AbstractUnitOfWork
 
 
 class FollowService:
     def __init__(self, uow: AbstractUnitOfWork):
         self.uow = uow
 
-
-    async def add_follow(self, current_user_id:int, following_id:int):
+    async def add_follow(self, current_user_id: int, following_id: int):
         logger.debug(f'пользователь с id:{current_user_id} пытается подписыватся на пользователя с id:{following_id}')
         async with self.uow:
             following_user = await self.uow.user.find_one(id=following_id)
@@ -43,10 +42,10 @@ class FollowService:
             logger.info(f"Подписка оформлена")
             return res
 
-
     async def unfollow(self, current_user_id, following_id):
         async with self.uow:
-            logger.debug(f'пользователь с id:{current_user_id} пытается отписыватся от пользователя с id:{following_id}')
+            logger.debug(
+                f'пользователь с id:{current_user_id} пытается отписыватся от пользователя с id:{following_id}')
             following_user = await self.uow.user.find_one(id=following_id)
             if following_user is None:
                 logger.error(

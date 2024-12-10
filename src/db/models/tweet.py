@@ -4,9 +4,9 @@ from typing import List
 from sqlalchemy import ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db.db import Base
-from db.models.likes import LikeOrm
-from db.models.media import MediaOrm
+from src.db.db import Base
+from src.db.models.likes import LikeOrm
+from src.db.models.media import MediaOrm
 
 """class tweet"""
 
@@ -30,11 +30,3 @@ class TweetOrm(Base):
 
     __mapper_args__ = {"confirm_deleted_rows": False}
 
-    # def to_read_model(self) -> TweetRead:
-    #     return TweetRead(
-    #         id=self.id,
-    #         data=self.data,
-    #         media=self.media,
-    #         author=self.author,
-    #         likes=self.likes
-    #     )

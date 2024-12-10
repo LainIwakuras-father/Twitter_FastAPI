@@ -4,8 +4,8 @@ from fastapi.requests import Request
 from fastapi.security import APIKeyHeader
 from loguru import logger
 
-from api.v1.dependencies import get_user_service
-from services.user_service import UserService
+from src.api.v1.dependencies import get_user_service
+from src.services.user_service import UserService
 from src.utils.exception import CustomException
 
 
@@ -39,8 +39,7 @@ query_api_key = APITokenKeyHeader(name="api-key")
 async def get_current_user(
         api_key: str = Security(query_api_key),
         service: UserService = Depends(get_user_service)
-) :
-
+):
     '''
         функция проверки текущего пользователя
     '''

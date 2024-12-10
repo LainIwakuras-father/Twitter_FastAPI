@@ -1,15 +1,13 @@
-from typing import AsyncGenerator
-
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
-from core.configs import Settings
+from src.core.configs import Settings
 
 '''
 Подключение к серверу
 '''
 DB_URL = Settings.DB_URL
-engine = create_async_engine(DB_URL, echo=True)
+engine = create_async_engine(DB_URL)
 '''
 Создание сессии для работы с БД
 '''
@@ -27,14 +25,3 @@ class Base(DeclarativeBase):
 """
 функции создания БД
 """
-
-
-async def create_database():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-
-# Получение асинхронной сессии
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session() as session:
-        yield session

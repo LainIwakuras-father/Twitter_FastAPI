@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
-from db.db import async_session
-from repositories.follow_repository import FollowRepository
-from repositories.like_repository import LikeRepository
-from repositories.media_repository import MediaRepository
-from repositories.tweet_repository import TweetRepository
-from repositories.user_repository import UserRepository
+from src.db.db import async_session
+from src.repositories.follow_repository import FollowRepository
+from src.repositories.like_repository import LikeRepository
+from src.repositories.media_repository import MediaRepository
+from src.repositories.tweet_repository import TweetRepository
+from src.repositories.user_repository import UserRepository
 
 
 class AbstractUnitOfWork(ABC):
@@ -37,8 +37,8 @@ class AbstractUnitOfWork(ABC):
 
 
 class UnitOfWork(AbstractUnitOfWork):
-    def __init__(self):
-        self.session_factory = async_session
+    def __init__(self, session=async_session):
+        self.session_factory = session
 
     async def __aenter__(self):
         self.session = self.session_factory()
