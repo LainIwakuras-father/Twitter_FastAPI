@@ -12,7 +12,6 @@ services:
         - POSTGRES_DB=${DB_NAME}
       volumes:
         - postgres:/var/lib/postgres/data
-
       networks:
         - network
 
@@ -21,15 +20,13 @@ services:
     app:
         container_name: my_project_app
         build: .
+        command: uvicorn src.main:app --host 0.0.0.0 --port 8000
         env_file:
           - .env
         ports:
           - 8000:8000
         depends_on:
           - db
-        environment:
-          DB_URL: "postgresql://postgres:ayetatary@db:5432/postgres"
-
         networks:
           - network
 
