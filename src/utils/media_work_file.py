@@ -6,7 +6,8 @@ from loguru import logger
 
 
 async def save_upload_media(file: UploadFile):
-    upload_folder = "static\image"
+    upload_folder = "static"
+    #os.chdir('C:\Users\Батон\Desktop\URy\Twitter_FastAPI\static')
     # Создаем директорию для картинки, если ее не
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)

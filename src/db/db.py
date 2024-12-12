@@ -1,7 +1,10 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import select
 
 from src.core.configs import Settings
+
+
 '''
 Подключение к серверу
 '''
@@ -17,8 +20,15 @@ async_session = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncS
 class Base(DeclarativeBase):
     pass
 """
-функции создания БД
+функции создания  и удаления БД
 """
 async def create_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+async def drop_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+
+
+

@@ -1,4 +1,5 @@
-FROM python:3.11
+#ПИШИ СВОЮ ВЕРСИЮ ПИТОНА
+FROM python:3.12.0-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -8,12 +9,10 @@ LABEL "Creator"="Uriy Dolewsky"
 
 WORKDIR /app
 
-COPY requirements-base.txt .
+COPY requirements-base.txt /app/requirements-base.txt
 
-RUN pip install --no-cache-dir --upgrade -r requirements-base.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements-base.txt
 
-COPY . .
+COPY src /app/src
 
-#EXPOSE 8000
-
-#CMD ["uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8000"]
+#CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
