@@ -14,6 +14,6 @@ RUN pip install --no-cache-dir --upgrade -r requirements-base.txt
 
 COPY . .
 
-EXPOSE 8000
+#EXPOSE 8000
 
-CMD ["uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8000"]
+#CMD ["uvicorn", "src.main:app", "--host", "127.0.0.1", "--port", "8000"]
