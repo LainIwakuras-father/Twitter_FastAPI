@@ -9,10 +9,10 @@ LABEL "Creator"="Uriy Dolewsky"
 
 WORKDIR /app
 
-COPY requirements-base.txt /app/requirements-base.txt
+COPY requirements/requirements-base.txt /app/requirements-base.txt
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements-base.txt
 
-COPY src /app/src
+COPY ./src /app/src
 
 #CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]

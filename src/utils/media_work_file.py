@@ -1,13 +1,17 @@
 import os
+from typing import List
 
 import aiofiles
 from fastapi import UploadFile
 from loguru import logger
 
+from src.db.models.media import MediaOrm
+
 
 async def save_upload_media(file: UploadFile):
-    upload_folder = "static"
-    #os.chdir('C:\Users\Батон\Desktop\URy\Twitter_FastAPI\static')
+
+    #upload_folder = "static"
+    upload_folder = "src/static" #дл докер контейнера
     # Создаем директорию для картинки, если ее не
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
@@ -20,8 +24,21 @@ async def save_upload_media(file: UploadFile):
     return file.filename
 
 
-async def delete_media():
+async def delete_media(media: List[MediaOrm])->None:
     '''
     удаление из файловой системы
     '''
-    pass
+    for img in media:
+        try:
+
+            # Удаляем каждое изображение из файловой системы
+            os.remove(os.path.join("static", str(img.file_path)))
+            logger.debug(f"Изображение №{img.id} - {img.path_media} удалено")
+
+        except FileNotFoundError:
+            logger.error(f"Директория: {img.file_path} не найдена")
+
+    logger.info("Все изображения удалены")
+
+    # Проверка и очистка директории, если пустая
+

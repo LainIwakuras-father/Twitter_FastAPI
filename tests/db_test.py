@@ -1,3 +1,4 @@
+from loguru import logger
 from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
@@ -25,6 +26,7 @@ Base.metadata.bind = engine_test
 
 async def test_get_uow_with_session() -> UnitOfWork:
     return UnitOfWork(async_test_session)
+
 """
 1) в файле pytest.ini я переопределил файл .env на .test.env
 2) здесь я созданную тестовую сессию переопределил в мое приложение
