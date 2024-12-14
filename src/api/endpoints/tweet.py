@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from src.api.schemas.base_response import BaseGoodResponse
 from src.api.schemas.tweet_schema import TweetWrite, TweetsOut, TweetCreateGoodResponse
-from src.api.v1.dependencies import tweet_service, like_service
+from src.api.dependencies import tweet_service, like_service
 from src.db.models.user import UserOrm
 from src.utils.get_current_user import get_current_user
 

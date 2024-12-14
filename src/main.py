@@ -1,14 +1,13 @@
 import os
 
 from loguru import logger
-from fastapi import FastAPI, Depends, Request
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from src.api.v1.router import routers
-from src.db.db import create_db, async_session, drop_db
+from src.api.router import routers
+from src.db.db import create_db, async_session
 from src.db.models.user import UserOrm
 from src.utils.exception import custom_exception_handler, CustomException
 from src.utils.get_current_user import get_current_user
@@ -16,8 +15,9 @@ from src.utils.get_current_user import get_current_user
 #########################
 # BLOCK WITH API ROUTES #
 #########################
-"""СОЗдание пользователя в БД"""
+
 async def create_test_user(db:AsyncSession, name: str, api_key:str):
+        """СОЗдание пользователя в БД"""
         query = select(UserOrm).filter(UserOrm.name == name)
         res = await db.execute(query)
         user = res.scalar_one_or_none()
@@ -42,23 +42,17 @@ app = FastAPI(title="Twitter",
               debug=True,
 
               )
-#lifispan=lifispan
-app_api = FastAPI()
 
-app_api.include_router(routers)
 app.include_router(routers, dependencies=[Depends(get_current_user)])
-app.mount("/api", app_api)
+
+app.mount("/api", app)
+
 app.mount(
-    "/",
+    "/api",
     StaticFiles(directory=path, html=True),
     name="static",
 )
-app.mount(
-    "/static",
-    StaticFiles(directory=path),
-    name="image",
-)
-# dependencies=[Depends(get_current_user)]
+
 app.add_exception_handler(CustomException, custom_exception_handler)
 
 db:AsyncSession = async_session()
@@ -80,18 +74,11 @@ async def shutdown_event():
     #logger.debug('DB DROP')
 
 
-@app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    return HTMLResponse("index.html")
-
 
 """
 классическая функция для запуска
 """
 if __name__ == '__main__':
-    #import asyncio
     import uvicorn
-
-    #asyncio.run(create_db())
     uvicorn.run(app=app, host="127.0.0.1", port=8000)
 

@@ -1,8 +1,7 @@
-from loguru import logger
 from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from src.api.v1.dependencies import get_uow_with_session
+from src.api.dependencies import get_uow_with_session
 from src.main import app
 from src.db.db import Base
 from src.core.configs import Settings

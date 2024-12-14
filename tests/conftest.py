@@ -7,7 +7,7 @@ from tests.db_test import engine_test,Base
 
 
 @pytest.fixture(autouse=True,scope='session')
-async def sturtup_event():
+async def startup_event():
     """
     Удаление и создание таблиц перед тестом
     """

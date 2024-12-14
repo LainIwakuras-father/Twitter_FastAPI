@@ -4,7 +4,7 @@ from fastapi.requests import Request
 from fastapi.security import APIKeyHeader
 from loguru import logger
 
-from src.api.v1.dependencies import get_user_service
+from src.api.dependencies import get_user_service
 from src.services.user_service import UserService
 from src.utils.exception import CustomException
 

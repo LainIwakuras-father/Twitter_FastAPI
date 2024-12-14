@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from src.api.v1.endpoints.media import media_router
-from src.api.v1.endpoints.tweet import tweet_router
-from src.api.v1.endpoints.user import user_router
+from src.api.endpoints.media import media_router
+from src.api.endpoints.tweet import tweet_router
+from src.api.endpoints.user import user_router
 
 routers = APIRouter()
 

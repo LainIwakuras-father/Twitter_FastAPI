@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile
 from loguru import logger
 
 from src.api.schemas.tweet_schema import MediaOut
-from src.api.v1.dependencies import media_service
+from src.api.dependencies import media_service
 from src.utils.exception import CustomException
 
 media_router = APIRouter(prefix='/api/medias', tags=["image"])
