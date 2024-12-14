@@ -1,5 +1,4 @@
 from typing import Optional, List
-
 from pydantic import BaseModel, ConfigDict
 
 from src.api.schemas.base_response import BaseGoodResponse
@@ -7,7 +6,6 @@ from src.api.schemas.base_response import BaseGoodResponse
 
 class UserWrite(BaseModel):
     name: str
-    model_config = ConfigDict(from_attributes=True)
 
 
 class User(BaseModel):
